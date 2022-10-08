@@ -1,10 +1,8 @@
-<script setup lang="ts">
-import PageHome from "@/components/PageHome.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="container">
-    <PageHome />
+    <RouterView />
   </div>
 </template>
 
