@@ -1,44 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import ThreadList from "./ThreadList.vue";
 import dataSources from "@/data/data.json";
 
 const threads = ref(dataSources.threads);
-const posts = ref(dataSources.posts);
-const users = ref(dataSources.users);
-
-const postById = (postId: string) => posts.value.find((p) => p.id === postId);
-const userById = (userId: string) => users.value.find((u) => u.id === userId);
 </script>
 
 <template>
-  <div v-for="thread in threads" :key="thread.id" class="col-large push-top">
-    <h1>{{ thread.title }}</h1>
-    <div class="post-list">
-      <div v-for="postId in thread.posts" :key="postId" class="post">
-        <div class="user-info">
-          <a class="user-name" href="#">
-            {{ userById(postById(postId)!.userId)?.name }}
-          </a>
-          <a href="#">
-            <img
-              class="avatar-large"
-              :src="userById(postById(postId)!.userId)?.avatar"
-              :alt="userById(postById(postId)!.userId)?.name"
-            />
-          </a>
-          <p class="desktop-only text-small">108 Post</p>
-        </div>
-        <div class="post-content">
-          <div>
-            <p>{{ postById(postId)?.text }}</p>
-          </div>
-        </div>
-        <div class="post-date text-faded">
-          {{ postById(postId)?.publishedAt }}
-        </div>
-      </div>
-    </div>
-  </div>
+  <h1>Welcome to Forums</h1>
+  <ThreadList :threads="threads" />
 </template>
 
 <style scoped>

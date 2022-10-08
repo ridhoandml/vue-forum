@@ -7,6 +7,5 @@
 </template>
 
 <style lang="scss">
-@import "@/assets/style.css";
-@import "~bootstrap/dist/css/bootstrap.css";
+@import "@/assets/css/style.css";
 </style>
