@@ -1,15 +1,41 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import ThreadList from "./ThreadList.vue";
+import type { Post } from "@/assets/types/Index";
 import dataSources from "@/data/data.json";
-import type { Thread } from "@/assets/types/Index";
 
-const threads = ref<Thread[]>(dataSources.threads);
+const props = defineProps<{
+  posts: Post[];
+}>();
+
+const userById = (userId: string) =>
+  dataSources.users.find((u) => u.id === userId);
 </script>
 
 <template>
-  <h1>Welcome to Forums</h1>
-  <ThreadList :threads="threads" />
+  <div class="post-list">
+    <div v-for="post in props.posts" :key="post.id" class="post">
+      <div class="user-info">
+        <a class="user-name" href="#">
+          {{ userById(post.userId)?.name }}
+        </a>
+        <a href="#">
+          <img
+            class="avatar-large"
+            :src="userById(post.userId)?.avatar"
+            :alt="userById(post.userId)?.name"
+          />
+        </a>
+        <p class="desktop-only text-small">108 Post</p>
+      </div>
+      <div class="post-content">
+        <div>
+          <p>{{ post.text }}</p>
+        </div>
+      </div>
+      <div class="post-date text-faded">
+        {{ post.publishedAt }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>

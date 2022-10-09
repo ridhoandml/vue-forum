@@ -3,11 +3,12 @@ import {
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
+import dataSources from "@/data/data.json";
 
 // Import Page
-import PageHome from "@/components/PageHome.vue";
-import PageThreadView from "@/components/PageThreadView.vue";
-import PageNotFound from "@/components/PageNotFound.vue";
+import PageHome from "@/pages/PageHome.vue";
+import PageThreadView from "@/pages/PageThreadView.vue";
+import PageNotFound from "@/pages/PageNotFound.vue";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -20,6 +21,22 @@ const routes: Readonly<RouteRecordRaw[]> = [
     name: "ThreadView",
     component: PageThreadView,
     props: true,
+    beforeEnter: (to, from, next) => {
+      const threadExists = dataSources.threads.find(
+        (t) => t.id === to.params.id
+      );
+
+      if (threadExists) {
+        next();
+      } else {
+        next({
+          name: "NotFound",
+          params: { pathMatch: to.path.substring(1).split("/") },
+          query: to.query,
+          hash: to.hash,
+        });
+      }
+    },
   },
   {
     path: "/:pathMatch(.*)*",

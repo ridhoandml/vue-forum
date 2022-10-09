@@ -1,53 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
+import ThreadList from "@/components/ThreadList.vue";
 import dataSources from "@/data/data.json";
-import type { Post, Thread, User } from "@/assets/types/Index";
+import type { Thread } from "@/assets/types/Index";
 
 const threads = ref<Thread[]>(dataSources.threads);
-const posts = ref<Post[]>(dataSources.posts);
-const users = ref<User[]>(dataSources.users);
-
-const props = defineProps<{
-  id: string;
-}>();
-
-const thread = computed(() => {
-  return threads.value.find((t) => t.id === props.id);
-});
-
-const postById = (postId: string) => posts.value.find((p) => p.id === postId);
-const userById = (userId: string) => users.value.find((u) => u.id === userId);
 </script>
 
 <template>
-  <div class="col-large push-top">
-    <h1>{{ thread?.title }}</h1>
-    <div class="post-list">
-      <div v-for="postId in thread?.posts" :key="postId" class="post">
-        <div class="user-info">
-          <a class="user-name" href="#">
-            {{ userById(postById(postId)!.userId)?.name }}
-          </a>
-          <a href="#">
-            <img
-              class="avatar-large"
-              :src="userById(postById(postId)!.userId)?.avatar"
-              :alt="userById(postById(postId)!.userId)?.name"
-            />
-          </a>
-          <p class="desktop-only text-small">108 Post</p>
-        </div>
-        <div class="post-content">
-          <div>
-            <p>{{ postById(postId)?.text }}</p>
-          </div>
-        </div>
-        <div class="post-date text-faded">
-          {{ postById(postId)?.publishedAt }}
-        </div>
-      </div>
-    </div>
-  </div>
+  <h1>Welcome to Forums</h1>
+  <ThreadList :threads="threads" />
 </template>
 
 <style scoped>
