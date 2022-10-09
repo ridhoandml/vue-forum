@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import dataSources from "@/data/data.json";
+import type { Thread } from "@/assets/types/Index";
 
 defineProps<{
-  threads: any[];
+  threads: Thread[];
 }>();
 
 const users = ref(dataSources.users);
@@ -18,7 +19,10 @@ const userById = (userId: string) => users.value.find((u) => u.id === userId);
       <div v-for="thread in threads" :key="thread.id" class="thread">
         <div>
           <p>
-            <a href="">{{ thread.title }}</a>
+            <RouterLink
+              :to="{ name: 'ThreadView', params: { id: thread.id } }"
+              >{{ thread.title }}</RouterLink
+            >
           </p>
           <p>
             By

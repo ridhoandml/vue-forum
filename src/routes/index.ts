@@ -7,6 +7,7 @@ import {
 // Import Page
 import PageHome from "@/components/PageHome.vue";
 import PageThreadView from "@/components/PageThreadView.vue";
+import PageNotFound from "@/components/PageNotFound.vue";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -19,6 +20,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
     name: "ThreadView",
     component: PageThreadView,
     props: true,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: PageNotFound,
   },
 ];
 

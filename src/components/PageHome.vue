@@ -2,8 +2,9 @@
 import { ref } from "vue";
 import ThreadList from "./ThreadList.vue";
 import dataSources from "@/data/data.json";
+import type { Thread } from "@/assets/types/Index";
 
-const threads = ref(dataSources.threads);
+const threads = ref<Thread[]>(dataSources.threads);
 </script>
 
 <template>

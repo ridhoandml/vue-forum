@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import dataSources from "@/data/data.json";
+import type { Post, Thread, User } from "@/assets/types/Index";
 
-const threads = ref(dataSources.threads);
-const posts = ref(dataSources.posts);
-const users = ref(dataSources.users);
+const threads = ref<Thread[]>(dataSources.threads);
+const posts = ref<Post[]>(dataSources.posts);
+const users = ref<User[]>(dataSources.users);
 
 const props = defineProps<{
   id: string;
