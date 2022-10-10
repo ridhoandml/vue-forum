@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import dataSources from "@/data/data.json";
-import type { Post, Thread } from "@/assets/types/Index";
+import type { Post, Thread } from "@/assets/types";
 import PostList from "@/components/PostList.vue";
 import PostEditor from "../components/PostEditor.vue";
 

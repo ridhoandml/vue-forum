@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from "@/assets/types/Index";
+import type { Post } from "@/assets/types";
 import dataSources from "@/data/data.json";
 
 const props = defineProps<{

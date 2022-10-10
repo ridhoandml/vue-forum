@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import dataSources from "@/data/data.json";
-import type { Thread } from "@/assets/types/Index";
+import type { Thread } from "@/assets/types";
 
 defineProps<{
   threads: Thread[];

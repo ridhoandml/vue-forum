@@ -9,12 +9,19 @@ import dataSources from "@/data/data.json";
 import PageHome from "@/pages/PageHome.vue";
 import PageThreadView from "@/pages/PageThreadView.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
+import PageForum from "@/pages/PageForum.vue";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
     path: "/",
     name: "Home",
     component: PageHome,
+  },
+  {
+    path: "/forum/:id",
+    name: "Forum",
+    component: PageForum,
+    props: true,
   },
   {
     path: "/thread/:id",

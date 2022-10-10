@@ -1,4 +1,4 @@
-export interface Data {
+export interface DataForum {
   categories: Category[];
   forums: Forum[];
   posts: Post[];

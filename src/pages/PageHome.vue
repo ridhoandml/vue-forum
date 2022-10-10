@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import ThreadList from "@/components/ThreadList.vue";
+import ForumList from "@/components/ForumList.vue";
 import dataSources from "@/data/data.json";
-import type { Thread } from "@/assets/types/Index";
+import type { Forum } from "@/assets/types";
 
-const threads = ref<Thread[]>(dataSources.threads);
+const forums = ref<Forum[]>(dataSources.forums);
 </script>
 
 <template>
   <h1>Welcome to Forums</h1>
-  <ThreadList :threads="threads" />
+  <ForumList :forums="forums" />
 </template>
 
 <style scoped>
