@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import type { Forum } from "@/assets/types";
 
-const props = defineProps<{
-  forums: Forum[];
-}>();
+const props = withDefaults(
+  defineProps<{
+    forums: Forum[];
+    title: string;
+    categoryId?: string;
+  }>(),
+  {
+    title: "Forum",
+  }
+);
 </script>
 
 <template>
   <div class="col-full">
     <div class="forum-list">
       <div class="list-title">
-        <a href="#">Forums</a>
+        <RouterLink
+          v-if="categoryId"
+          :to="{ name: 'Category', params: { id: categoryId } }"
+          >{{ props.title }}</RouterLink
+        >
+        <span v-else>Forums</span>
       </div>
 
       <div v-for="forum in props.forums" :key="forum.id" class="forum-listing">

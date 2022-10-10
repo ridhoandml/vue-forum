@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import ForumList from "@/components/ForumList.vue";
 import dataSources from "@/data/data.json";
-import type { Forum } from "@/assets/types";
+import type { Category } from "@/assets/types";
+import CategoryList from "../components/CategoryList.vue";
 
-const forums = ref<Forum[]>(dataSources.forums);
+const categories = ref<Category[]>(dataSources.categories);
 </script>
 
 <template>
   <h1>Welcome to Forums</h1>
-  <ForumList :forums="forums" />
+  <CategoryList :categories="categories" />
 </template>
 
 <style scoped>

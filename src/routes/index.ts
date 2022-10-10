@@ -10,6 +10,7 @@ import PageHome from "@/pages/PageHome.vue";
 import PageThreadView from "@/pages/PageThreadView.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
 import PageForum from "@/pages/PageForum.vue";
+import Category from "@/pages/PageCategory.vue";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -21,6 +22,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
     path: "/forum/:id",
     name: "Forum",
     component: PageForum,
+    props: true,
+  },
+  {
+    path: "/category/:id",
+    name: "Category",
+    component: Category,
     props: true,
   },
   {
