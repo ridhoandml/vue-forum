@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import type { Category } from "@/assets/types";
 import ForumList from "./ForumList.vue";
-import dataSources from "@/data/data.json";
-import { ref } from "vue";
-import type { Forum } from "@/assets/types";
+import { useDataSources } from "@/composables/useDataSources";
 
-const forums = ref<Forum[]>(dataSources.forums);
+const { forums } = useDataSources();
 
 const props = defineProps<{
   categories: Category[];
 }>();
 
 const getForumsCategory = (category: Category) =>
-  forums.value.filter((f) => f.categoryId === category.id);
+  forums.filter((f) => f.categoryId === category.id);
 </script>
 
 <template>

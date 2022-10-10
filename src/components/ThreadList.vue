@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import dataSources from "@/data/data.json";
 import type { Thread } from "@/assets/types";
+import { useDataSources } from "@/composables/useDataSources";
 
 defineProps<{
   threads: Thread[];
 }>();
 
-const users = ref(dataSources.users);
+const { users } = useDataSources();
 
-const userById = (userId: string) => users.value.find((u) => u.id === userId);
+const userById = (userId: string) => users.find((u) => u.id === userId);
 </script>
 
 <template>

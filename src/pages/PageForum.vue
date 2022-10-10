@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import ThreadList from "../components/ThreadList.vue";
-import dataSources from "@/data/data.json";
-import { computed, ref } from "vue";
-import type { Forum, Thread } from "@/assets/types";
+import { computed } from "vue";
+import { useDataSources } from "@/composables/useDataSources";
+
 const props = defineProps<{
   id: string;
 }>();
 
-const forums = ref<Forum[]>(dataSources.forums);
-const threads = ref<Thread[]>(dataSources.threads);
+const { forums, threads } = useDataSources();
 
-const forum = computed(() => forums.value.find((f) => f.id === props.id));
+const forum = computed(() => forums.find((f) => f.id === props.id));
 const threadsList = computed(() =>
-  threads.value.filter((t) => t.forumId === props.id)
+  threads.filter((t) => t.forumId === props.id)
 );
 </script>
 

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import dataSources from "@/data/data.json";
-import type { Category } from "@/assets/types";
 import CategoryList from "../components/CategoryList.vue";
+import { useDataSources } from "@/composables/useDataSources";
 
-const categories = ref<Category[]>(dataSources.categories);
+const { categories } = useDataSources();
 </script>
 
 <template>

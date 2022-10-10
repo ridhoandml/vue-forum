@@ -41,18 +41,6 @@ const props = withDefaults(
             {{ forum.threads?.length! > 1 ? "threads" : "thread" }}
           </p>
         </div>
-
-        <!-- <div class="last-thread">
-          <img class="avatar" src="" alt="" />
-          <div class="last-thread-details">
-            <a href="">Post Reaction</a>
-            <p class="text-xsmall">
-              By
-              <a href="">Test</a>
-              , Month ago
-            </p>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>

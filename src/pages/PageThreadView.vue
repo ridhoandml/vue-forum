@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import dataSources from "@/data/data.json";
-import type { Post, Thread } from "@/assets/types";
+import { computed } from "vue";
 import PostList from "@/components/PostList.vue";
 import PostEditor from "../components/PostEditor.vue";
+import { useDataSources } from "@/composables/useDataSources";
+import type { Post } from "@/assets/types";
 
-const threads = ref<Thread[]>(dataSources.threads);
-const posts = ref<Post[]>(dataSources.posts);
+const { threads, posts } = useDataSources();
 
 const props = defineProps<{
   id: string;
 }>();
 
 const thread = computed(() => {
-  return threads.value.find((t) => t.id === props.id);
+  return threads.find((t) => t.id === props.id);
 });
 
 const threadPosts = computed(() => {
-  return posts.value.filter((p) => p.threadId === props.id);
+  return posts.filter((p) => p.threadId === props.id);
 });
 
 const addPost = (eventData: any) => {
@@ -25,8 +24,7 @@ const addPost = (eventData: any) => {
     ...eventData,
     threadId: props.id,
   };
-
-  posts.value.push(post);
+  posts.push(post);
   thread.value?.posts.push(post.id);
 };
 </script>
