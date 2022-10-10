@@ -2,10 +2,10 @@
 import { computed } from "vue";
 import PostList from "@/components/PostList.vue";
 import PostEditor from "../components/PostEditor.vue";
-import { useDataSources } from "@/composables/useDataSources";
 import type { Post } from "@/assets/types";
+import { useStore } from "@/stores";
 
-const { threads, posts } = useDataSources();
+const { threads, posts } = useStore();
 
 const props = defineProps<{
   id: string;

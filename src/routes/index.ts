@@ -3,7 +3,6 @@ import {
   createWebHistory,
   type RouteRecordRaw,
 } from "vue-router";
-import dataSources from "@/data/data.json";
 
 // Import Page
 import PageHome from "@/pages/PageHome.vue";
@@ -11,6 +10,7 @@ import PageThreadView from "@/pages/PageThreadView.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
 import PageForum from "@/pages/PageForum.vue";
 import Category from "@/pages/PageCategory.vue";
+import { useStore } from "@/stores";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -36,9 +36,8 @@ const routes: Readonly<RouteRecordRaw[]> = [
     component: PageThreadView,
     props: true,
     beforeEnter: (to, from, next) => {
-      const threadExists = dataSources.threads.find(
-        (t) => t.id === to.params.id
-      );
+      const { threads } = useStore();
+      const threadExists = threads.find((t) => t.id === to.params.id);
 
       if (threadExists) {
         next();

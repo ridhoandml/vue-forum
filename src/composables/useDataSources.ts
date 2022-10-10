@@ -1,5 +1,5 @@
-import type { Category, Forum, Post, Thread, User } from "@/assets/types/Index";
-import json from "@/data/data.json";
+import type { Category, Forum, Post, Thread, User } from "@/assets/types";
+import json from "@/datas/data.json";
 
 export const useDataSources = () => {
   const forums: Forum[] = json.forums;

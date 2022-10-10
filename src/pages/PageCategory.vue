@@ -2,13 +2,13 @@
 import { computed } from "vue";
 import type { Category } from "@/assets/types";
 import ForumList from "../components/ForumList.vue";
-import { useDataSources } from "@/composables/useDataSources";
+import { useStore } from "@/stores";
 
 const props = defineProps<{
   id: string;
 }>();
 
-const { forums, categories } = useDataSources();
+const { forums, categories } = useStore();
 
 const category = computed(() => categories.find((c) => c.id === props.id));
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import ThreadList from "../components/ThreadList.vue";
 import { computed } from "vue";
-import { useDataSources } from "@/composables/useDataSources";
+import { useStore } from "@/stores";
 
 const props = defineProps<{
   id: string;
 }>();
 
-const { forums, threads } = useDataSources();
+const { forums, threads } = useStore();
 
 const forum = computed(() => forums.find((f) => f.id === props.id));
 const threadsList = computed(() =>

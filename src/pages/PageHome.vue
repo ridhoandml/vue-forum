@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import CategoryList from "../components/CategoryList.vue";
-import { useDataSources } from "@/composables/useDataSources";
+import { useStore } from "@/stores";
 
-const { categories } = useDataSources();
+const { categories } = useStore();
 </script>
 
 <template>

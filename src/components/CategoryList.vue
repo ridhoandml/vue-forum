@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Category } from "@/assets/types";
 import ForumList from "./ForumList.vue";
-import { useDataSources } from "@/composables/useDataSources";
+import { useStore } from "@/stores";
 
-const { forums } = useDataSources();
+const { forums } = useStore();
 
 const props = defineProps<{
   categories: Category[];

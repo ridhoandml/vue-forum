@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { Post } from "@/assets/types";
-import dataSources from "@/data/data.json";
+import { useStore } from "@/stores";
 
 const props = defineProps<{
   posts: Post[];
 }>();
 
-const userById = (userId: string) =>
-  dataSources.users.find((u) => u.id === userId);
+const { users } = useStore();
+
+const userById = (userId: string) => users.find((u) => u.id === userId);
 </script>
 
 <template>

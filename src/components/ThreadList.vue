@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Thread } from "@/assets/types";
-import { useDataSources } from "@/composables/useDataSources";
+import { useStore } from "@/stores";
 
 defineProps<{
   threads: Thread[];
 }>();
 
-const { users } = useDataSources();
+const { users } = useStore();
 
 const userById = (userId: string) => users.find((u) => u.id === userId);
 </script>
