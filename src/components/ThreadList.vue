@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Thread } from "@/assets/types";
+import type { Thread } from "@/types";
 import { useStore } from "@/stores";
 
 defineProps<{

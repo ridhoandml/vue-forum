@@ -1,56 +1,37 @@
 <script setup lang="ts">
 import { useStore } from "@/stores";
-import { computed } from "vue";
 import PostList from "../components/PostList.vue";
 import ThreadList from "../components/ThreadList.vue";
+import UserProfileCard from "../components/UserProfileCard.vue";
+import UserProfileCardEditor from "../components/UserProfileCardEditor.vue";
 
-const { posts, threads, getAuthUser } = useStore();
+const { getAuthUser, getPosts, getThreads } = useStore();
 
-const getPosts = computed(() =>
-  posts.filter((p) => p.userId === getAuthUser!.id)
-);
-
-const getThreads = computed(() =>
-  threads.filter((t) => t.userId === getAuthUser!.id)
+const props = withDefaults(
+  defineProps<{
+    edit?: boolean;
+  }>(),
+  {
+    edit: false,
+  }
 );
 </script>
 <template>
   <div class="container">
     <div class="flex-grid">
       <div class="col-3 push-top">
-        <div class="profile-card">
-          <p class="text-center">
-            <img
-              :src="getAuthUser?.avatar"
-              :alt="`${getAuthUser?.name} profile picture`"
-              class="avatar-xlarge"
-            />
-          </p>
-          <h1 class="title">{{ getAuthUser?.username }}</h1>
-          <p class="text-lead">{{ getAuthUser?.name }}</p>
-          <p class="text-justify">
-            {{ getAuthUser?.bio ?? "No bio specified" }}
-          </p>
-          <span class="online">{{ getAuthUser?.username }} is online</span>
-          <div class="stats">
-            <span>{{ getPosts.length }} posts</span>
-            <span>{{ getThreads.length }} threads</span>
-          </div>
-          <hr />
-          <p v-if="getAuthUser?.website" class="text-large text-center">
-            <i class="fa fa-globe"></i>
-            <a :href="getAuthUser.website">{{ getAuthUser.website }}</a>
-          </p>
-        </div>
-        <p class="text-xsmall text-faded text-center">
-          Member since june 2003, last visited 4 hours ago
-        </p>
-        <div class="text-center">
-          <hr />
-          <a href="edit-profile.html" class="btn-green btn-small"
-            >Edit Profile</a
-          >
-        </div>
+        <UserProfileCard
+          v-if="!props.edit"
+          :user="getAuthUser!"
+          :posts="getPosts"
+          :threads="getThreads"
+        />
+        <UserProfileCardEditor
+          v-else
+          :user="getAuthUser!"
+          :posts="getPosts"
+          :threads="getThreads"
+        />
       </div>
       <div class="col-7 push-top">
         <div class="profile-header">

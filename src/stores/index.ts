@@ -24,9 +24,25 @@ export const useStore = defineStore("main", () => {
     authId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
   });
 
-  const getAuthUser = computed(() =>
-    users.value.find((u) => u.id === user.value.authId)
-  );
+  const findUser = (id: string) => users.value.find((u) => u.id === id);
+
+  const getPosts = computed(() => {
+    const userData = findUser(user.value.authId);
+    return posts.value.filter((p) => p.userId === userData?.id);
+  });
+
+  const getThreads = computed(() => {
+    const userData = findUser(user.value.authId);
+    return threads.value.filter((t) => t.userId === userData?.id);
+  });
+
+  const getAuthUser = computed(() => {
+    const userData = findUser(user.value.authId);
+    if (!userData) return null;
+    return {
+      ...userData,
+    };
+  });
 
   const createPost = ({ text, id }: { text: string; id: string }) => {
     const thread = threads.value.find((t) => t.id === id);
@@ -45,6 +61,11 @@ export const useStore = defineStore("main", () => {
     thread?.posts.push(post.id);
   };
 
+  const updateUser = ({ user, userId }: { user: User; userId: string }) => {
+    const findIndex = users.value.findIndex((u) => u.id === userId);
+    users.value[findIndex] = user;
+  };
+
   return {
     data,
     forums,
@@ -54,5 +75,8 @@ export const useStore = defineStore("main", () => {
     posts,
     createPost,
     getAuthUser,
+    getThreads,
+    getPosts,
+    updateUser,
   };
 });

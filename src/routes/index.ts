@@ -25,6 +25,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
     component: PageProfile,
   },
   {
+    path: "/me/edit",
+    name: "ProfileEdit",
+    component: PageProfile,
+    props: { edit: true },
+  },
+  {
     path: "/forum/:id",
     name: "Forum",
     component: PageForum,
