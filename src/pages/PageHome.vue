@@ -6,7 +6,7 @@ const { categories } = useStore();
 </script>
 
 <template>
-  <h1>Welcome to Forums</h1>
+  <h1 class="push-top">Welcome to Forums</h1>
   <CategoryList :categories="categories" />
 </template>
 

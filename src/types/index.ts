@@ -76,3 +76,7 @@ export interface User {
   twitter?: string;
   website?: string;
 }
+
+export interface AuthUser {
+  authId: string;
+}

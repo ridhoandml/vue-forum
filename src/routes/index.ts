@@ -9,7 +9,8 @@ import PageHome from "@/pages/PageHome.vue";
 import PageThreadView from "@/pages/PageThreadView.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
 import PageForum from "@/pages/PageForum.vue";
-import Category from "@/pages/PageCategory.vue";
+import PageCategory from "@/pages/PageCategory.vue";
+import PageProfile from "@/pages/PageProfile.vue";
 import { useStore } from "@/stores";
 
 const routes: Readonly<RouteRecordRaw[]> = [
@@ -17,6 +18,11 @@ const routes: Readonly<RouteRecordRaw[]> = [
     path: "/",
     name: "Home",
     component: PageHome,
+  },
+  {
+    path: "/me",
+    name: "Profile",
+    component: PageProfile,
   },
   {
     path: "/forum/:id",
@@ -27,7 +33,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
   {
     path: "/category/:id",
     name: "Category",
-    component: Category,
+    component: PageCategory,
     props: true,
   },
   {

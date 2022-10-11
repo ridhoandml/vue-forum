@@ -1,4 +1,4 @@
-import type { Category, Forum, Post, Thread, User } from "@/assets/types";
+import type { Category, Forum, Post, Thread, User } from "@/types";
 import json from "@/datas/data.json";
 
 export const useDataSources = () => {
