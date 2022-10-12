@@ -22,7 +22,11 @@ const threadsList = computed(() =>
         <h1>{{ forum?.name }}</h1>
         <p class="text-lead">{{ forum?.description }}</p>
       </div>
-      <a class="btn-green btn-small" href="">Start a thread</a>
+      <RouterLink
+        class="btn-green btn-small"
+        :to="{ name: 'ThreadCreate', params: { forumId: forum!.id } }"
+        >Start a thread</RouterLink
+      >
     </div>
   </div>
   <div class="col-full push-top">

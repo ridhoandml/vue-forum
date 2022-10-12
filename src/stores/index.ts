@@ -46,19 +46,55 @@ export const useStore = defineStore("main", () => {
 
   const createPost = ({ text, id }: { text: string; id: string }) => {
     const thread = threads.value.find((t) => t.id === id);
+    const publishedAt = Math.floor(Date.now() / 1000);
 
     const postId = `qqqq` + Math.random();
-    const post: Post = {
+    const newPost: Post = {
       edited: null,
       id: postId,
       text: text,
       threadId: id,
-      publishedAt: Math.floor(Date.now() / 1000),
-      userId: `38St7Q8Zi2N1SPa5ahzssq9kbyp1`,
+      publishedAt,
+      userId: user.value.authId,
     };
 
-    posts.value.push(post);
-    thread?.posts.push(post.id);
+    posts.value.push(newPost);
+    thread?.posts.push(newPost.id);
+  };
+
+  const createThread = async ({
+    title,
+    content,
+    id,
+  }: {
+    title: string;
+    content: string;
+    id: string;
+  }) => {
+    const forum = forums.value.find((f) => f.id === id);
+    const threadId = `tttt` + Math.random();
+
+    if (content != "".trim()) {
+      createPost({ text: content, id: threadId });
+    }
+
+    const newThread: Thread = {
+      firstPostId: "",
+      forumId: id,
+      lastPostAt: Math.floor(Date.now() / 1000),
+      lastPostId: "",
+      posts: [],
+      publishedAt: Math.floor(Date.now() / 1000),
+      slug: "",
+      title: title,
+      userId: user.value.authId,
+      id: threadId,
+    };
+
+    threads.value.push(newThread);
+    forum?.threads?.push(newThread.id);
+
+    return threads.value.find((t) => t.id === threadId);
   };
 
   const updateUser = ({ user, userId }: { user: User; userId: string }) => {
@@ -78,5 +114,6 @@ export const useStore = defineStore("main", () => {
     getThreads,
     getPosts,
     updateUser,
+    createThread,
   };
 });

@@ -11,6 +11,7 @@ import PageNotFound from "@/pages/PageNotFound.vue";
 import PageForum from "@/pages/PageForum.vue";
 import PageCategory from "@/pages/PageCategory.vue";
 import PageProfile from "@/pages/PageProfile.vue";
+import PageThreadCreate from "@/pages/PageThreadCreate.vue";
 import { useStore } from "@/stores";
 
 const routes: Readonly<RouteRecordRaw[]> = [
@@ -23,6 +24,7 @@ const routes: Readonly<RouteRecordRaw[]> = [
     path: "/me",
     name: "Profile",
     component: PageProfile,
+    meta: { toTop: true, smoothScroll: true },
   },
   {
     path: "/me/edit",
@@ -64,6 +66,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
     },
   },
   {
+    path: "/forum/:forumId/thread/create",
+    name: "ThreadCreate",
+    component: PageThreadCreate,
+    props: true,
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: PageNotFound,
@@ -73,4 +81,10 @@ const routes: Readonly<RouteRecordRaw[]> = [
 export const router = createRouter({
   history: createWebHistory(),
   routes: routes,
+  scrollBehavior: () => {
+    const top: number = 0;
+    const behavior: ScrollBehavior = "smooth";
+
+    return { top, behavior };
+  },
 });
