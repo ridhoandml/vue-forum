@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from "@/assets/types";
+import type { Post } from "@/types";
 import { useStore } from "@/stores";
 
 const props = defineProps<{

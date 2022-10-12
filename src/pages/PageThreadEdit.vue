@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { findById } from "@/helper";
 import { useStore } from "@/stores";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
@@ -11,7 +12,7 @@ const props = defineProps<{
 const { updateThread, threads, posts } = useStore();
 const router = useRouter();
 
-const thread = computed(() => threads.find((t) => t.id === props.id));
+const thread = computed(() => findById({ resources: threads, id: props.id }));
 const content = computed(
   () => posts.find((p) => p.id === thread.value?.posts[0])?.text
 );

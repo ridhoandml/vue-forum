@@ -14,6 +14,7 @@ import PageProfile from "@/pages/PageProfile.vue";
 import PageThreadCreate from "@/pages/PageThreadCreate.vue";
 import PageThreadEdit from "@/pages/PageThreadEdit.vue";
 import { useStore } from "@/stores";
+import { findById } from "@/helper";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -52,7 +53,10 @@ const routes: Readonly<RouteRecordRaw[]> = [
     props: true,
     beforeEnter: (to, from, next) => {
       const { threads } = useStore();
-      const threadExists = threads.find((t) => t.id === to.params.id);
+      const threadExists = findById({
+        resources: threads,
+        id: to.params.id as string,
+      });
 
       if (threadExists) {
         next();

@@ -10,6 +10,7 @@ import type {
   User,
 } from "@/types";
 import { computed, ref, type Ref } from "vue";
+import { findById } from "@/helper";
 
 export const useStore = defineStore("main", () => {
   const data: Ref<DataForum> = ref(dataSources);
@@ -24,77 +25,98 @@ export const useStore = defineStore("main", () => {
     authId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
   });
 
-  const findUser = (id: string) => users.value.find((u) => u.id === id);
-
-  const getPosts = computed(() => {
-    const userData = findUser(user.value.authId);
-    return posts.value.filter((p) => p.userId === userData?.id);
+  const findUser = findById({
+    resources: users.value,
+    id: user.value.authId,
   });
 
-  const getThreads = computed(() => {
-    const userData = findUser(user.value.authId);
-    return threads.value.filter((t) => t.userId === userData?.id);
-  });
+  const publishedAt = Math.floor(Date.now() / 1000);
+
+  const getPosts = computed(() =>
+    posts.value.filter((p) => p.userId === findUser?.id)
+  );
+
+  const getThreads = computed(() =>
+    threads.value.filter((t) => t.userId === findUser?.id)
+  );
 
   const getAuthUser = computed(() => {
-    const userData = findUser(user.value.authId);
-    if (!userData) return null;
+    if (!findUser) return null;
     return {
-      ...userData,
+      ...findUser,
     };
   });
 
-  const createPost = ({ text, id }: { text: string; id: string }) => {
-    const thread = threads.value.find((t) => t.id === id);
-    const publishedAt = Math.floor(Date.now() / 1000);
-
+  const postData = ({ text, id }: { text: string; id: string }) => {
     const postId = `qqqq` + Math.random();
-    const newPost: Post = {
+    return {
       edited: null,
       id: postId,
       text: text,
       threadId: id,
       publishedAt,
       userId: user.value.authId,
-    };
+    } as Post;
+  };
 
+  const threadData = ({
+    title,
+    forumId,
+  }: {
+    title: string;
+    forumId: string;
+  }) => {
+    const threadId = `tttt` + Math.random();
+    return {
+      firstPostId: "",
+      forumId,
+      lastPostAt: publishedAt,
+      lastPostId: "",
+      posts: [],
+      publishedAt: publishedAt,
+      slug: "",
+      title: title,
+      userId: user.value.authId,
+      id: threadId,
+    } as Thread;
+  };
+
+  const createPost = ({
+    text,
+    threadId,
+  }: {
+    text: string;
+    threadId: string;
+  }) => {
+    const thread = findById({ resources: threads.value, id: threadId });
+    const newPost = postData({ text, id: threadId });
     posts.value.push(newPost);
-    thread?.posts.push(newPost.id);
+    thread.posts.push(newPost.id);
   };
 
   const createThread = async ({
     title,
     content,
-    id,
+    forumId,
   }: {
     title: string;
     content: string;
-    id: string;
+    forumId: string;
   }) => {
-    const forum = forums.value.find((f) => f.id === id);
-    const threadId = `tttt` + Math.random();
+    const forum = findById({ resources: forums.value, id: forumId });
+    const newThread = threadData({ title, forumId: forum.id });
 
     if (content != "".trim()) {
-      createPost({ text: content, id: threadId });
+      const newPost = postData({ text: content, id: newThread.id });
+      posts.value.push(newPost);
+      newThread.posts.push(newPost.id);
+      threads.value.push(newThread);
+      forum.threads?.push(newThread.id);
+    } else {
+      threads.value.push(newThread);
+      forum.threads?.push(newThread.id);
     }
-
-    const newThread: Thread = {
-      firstPostId: "",
-      forumId: id,
-      lastPostAt: Math.floor(Date.now() / 1000),
-      lastPostId: "",
-      posts: [],
-      publishedAt: Math.floor(Date.now() / 1000),
-      slug: "",
-      title: title,
-      userId: user.value.authId,
-      id: threadId,
-    };
-
-    threads.value.push(newThread);
-    forum?.threads?.push(newThread.id);
-
-    return threads.value.find((t) => t.id === threadId);
+    return findById({ resources: threads.value, id: newThread.id });
   };
 
   const updateThread = async ({
@@ -106,11 +128,11 @@ export const useStore = defineStore("main", () => {
     content: string;
     id: string;
   }) => {
-    const thread = threads.value.find((t) => t.id === id);
+    const thread = findById({ resources: threads.value, id });
     const post = posts.value.find((t) => t.id === thread?.posts[0]);
 
-    const updateThread: Thread = { ...(thread as Thread), title };
-    const updatePost: Post = { ...(post as Post), text: content };
+    const updateThread = { ...(thread as Thread), title };
+    const updatePost = { ...(post as Post), text: content };
 
     const indexThread = threads.value.findIndex((t) => t.id === thread?.id);
     if (thread!.id && indexThread !== -1) {
@@ -126,7 +148,7 @@ export const useStore = defineStore("main", () => {
       posts.value.push(updatePost);
     }
 
-    return threads.value.find((t) => t.id === id);
+    return findById({ resources: threads.value, id });
   };
 
   const updateUser = ({ user, userId }: { user: User; userId: string }) => {
@@ -145,8 +167,8 @@ export const useStore = defineStore("main", () => {
     getAuthUser,
     getThreads,
     getPosts,
-    updateUser,
     createThread,
     updateThread,
+    updateUser,
   };
 });

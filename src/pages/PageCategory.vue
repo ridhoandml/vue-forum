@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { Category } from "@/assets/types";
+import type { Category } from "@/types";
 import ForumList from "../components/ForumList.vue";
 import { useStore } from "@/stores";
+import { findById } from "@/helper";
 
 const props = defineProps<{
   id: string;
@@ -10,7 +11,9 @@ const props = defineProps<{
 
 const { forums, categories } = useStore();
 
-const category = computed(() => categories.find((c) => c.id === props.id));
+const category = computed(() =>
+  findById({ resources: categories, id: props.id })
+);
 
 const getForumsCategory = (category: Category | undefined) =>
   forums.filter((f) => f.categoryId === category?.id);

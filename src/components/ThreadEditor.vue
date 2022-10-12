@@ -16,7 +16,7 @@ const title = ref<string>(props.title);
 const content = ref<string>(props.content);
 
 const existing = computed(() => {
-  if (title.value != "") {
+  if (props.title != "") {
     return false;
   } else {
     return true;

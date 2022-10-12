@@ -2,6 +2,7 @@
 import ThreadList from "../components/ThreadList.vue";
 import { computed } from "vue";
 import { useStore } from "@/stores";
+import { findById } from "@/helper";
 
 const props = defineProps<{
   id: string;
@@ -9,7 +10,7 @@ const props = defineProps<{
 
 const { forums, threads } = useStore();
 
-const forum = computed(() => forums.find((f) => f.id === props.id));
+const forum = computed(() => findById({ resources: forums, id: props.id }));
 const threadsList = computed(() =>
   threads.filter((t) => t.forumId === props.id)
 );
