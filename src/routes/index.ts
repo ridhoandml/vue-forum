@@ -12,6 +12,7 @@ import PageForum from "@/pages/PageForum.vue";
 import PageCategory from "@/pages/PageCategory.vue";
 import PageProfile from "@/pages/PageProfile.vue";
 import PageThreadCreate from "@/pages/PageThreadCreate.vue";
+import PageThreadEdit from "@/pages/PageThreadEdit.vue";
 import { useStore } from "@/stores";
 
 const routes: Readonly<RouteRecordRaw[]> = [
@@ -69,6 +70,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
     path: "/forum/:forumId/thread/create",
     name: "ThreadCreate",
     component: PageThreadCreate,
+    props: true,
+  },
+  {
+    path: "/thread/:id/edit",
+    name: "ThreadEdit",
+    component: PageThreadEdit,
     props: true,
   },
   {

@@ -25,7 +25,14 @@ const getValue = (eventData: string) => {
 
 <template>
   <div class="col-large push-top">
-    <h1>{{ thread?.title }}</h1>
+    <h1>
+      {{ thread?.title }}
+      <RouterLink
+        :to="{ name: 'ThreadEdit', params: { id: thread?.id } }"
+        class="btn-green btn-small"
+        >Edit</RouterLink
+      >
+    </h1>
     <PostList :posts="threadPosts"></PostList>
     <PostEditor @@get-value="getValue" />
   </div>

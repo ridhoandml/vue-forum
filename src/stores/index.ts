@@ -97,6 +97,38 @@ export const useStore = defineStore("main", () => {
     return threads.value.find((t) => t.id === threadId);
   };
 
+  const updateThread = async ({
+    title,
+    content,
+    id,
+  }: {
+    title: string;
+    content: string;
+    id: string;
+  }) => {
+    const thread = threads.value.find((t) => t.id === id);
+    const post = posts.value.find((t) => t.id === thread?.posts[0]);
+
+    const updateThread: Thread = { ...(thread as Thread), title };
+    const updatePost: Post = { ...(post as Post), text: content };
+
+    const indexThread = threads.value.findIndex((t) => t.id === thread?.id);
+    if (thread!.id && indexThread !== -1) {
+      threads.value[indexThread] = updateThread;
+    } else {
+      threads.value.push(updateThread);
+    }
+
+    const indexPost = posts.value.findIndex((p) => p.id === post?.id);
+    if (post!.id && indexPost !== -1) {
+      posts.value[indexPost] = updatePost;
+    } else {
+      posts.value.push(updatePost);
+    }
+
+    return threads.value.find((t) => t.id === id);
+  };
+
   const updateUser = ({ user, userId }: { user: User; userId: string }) => {
     const findIndex = users.value.findIndex((u) => u.id === userId);
     users.value[findIndex] = user;
@@ -115,5 +147,6 @@ export const useStore = defineStore("main", () => {
     getPosts,
     updateUser,
     createThread,
+    updateThread,
   };
 });
