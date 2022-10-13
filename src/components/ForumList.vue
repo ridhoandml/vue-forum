@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Forum } from "@/assets/types";
+import type { Forum } from "@/types";
 
 const props = withDefaults(
   defineProps<{

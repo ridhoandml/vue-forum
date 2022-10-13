@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Thread } from "@/types";
+import type { Thread, ThreadView } from "@/types";
 import { useStore } from "@/stores";
 
 defineProps<{
-  threads: Thread[];
+  threads: ThreadView[] | Thread[];
 }>();
 
 const { users } = useStore();

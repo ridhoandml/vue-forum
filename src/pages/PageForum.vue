@@ -8,11 +8,11 @@ const props = defineProps<{
   id: string;
 }>();
 
-const { forums, threads } = useStore();
+const { forums, getThreadView } = useStore();
 
 const forum = computed(() => findById({ resources: forums, id: props.id }));
 const threadsList = computed(() =>
-  threads.filter((t) => t.forumId === props.id)
+  forum.value.threads!.map((threadId) => getThreadView(threadId))
 );
 </script>
 

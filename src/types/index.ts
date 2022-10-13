@@ -80,3 +80,9 @@ export interface User {
 export interface AuthUser {
   authId: string;
 }
+
+export interface ThreadView extends Thread {
+  author: User;
+  repliesCount: number;
+  contributorsCount: number;
+}

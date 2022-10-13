@@ -7,6 +7,7 @@ import type {
   Forum,
   Post,
   Thread,
+  ThreadView,
   User,
 } from "@/types";
 import { computed, ref, type Ref } from "vue";
@@ -47,6 +48,26 @@ export const useStore = defineStore("main", () => {
     };
   });
 
+  const getUser = (id: string) => {
+    const user = findById({ resources: users.value, id });
+    if (!user) return null;
+    return {
+      user: users.value.find((u) => u.id === user.id)!,
+      posts: posts.value.filter((p) => p.userId === user.id),
+      threads: threads.value.filter((t) => t.userId === user.id),
+    };
+  };
+
+  const getThreadView = (id: string) => {
+    const findThread = findById({ resources: threads.value, id });
+    return {
+      ...findThread,
+      author: findById({ resources: users.value, id: findThread.userId }),
+      repliesCount: findThread.posts.length - 1,
+      contributorsCount: findThread.contributors?.length,
+    } as ThreadView;
+  };
+
   const postData = ({ text, id }: { text: string; id: string }) => {
     const postId = `qqqq` + Math.random();
     return {
@@ -68,6 +89,7 @@ export const useStore = defineStore("main", () => {
   }) => {
     const threadId = `tttt` + Math.random();
     return {
+      contributors: [],
       firstPostId: "",
       forumId,
       lastPostAt: publishedAt,
@@ -110,6 +132,7 @@ export const useStore = defineStore("main", () => {
       const newPost = postData({ text: content, id: newThread.id });
       posts.value.push(newPost);
       newThread.posts.push(newPost.id);
+      newThread.contributors?.push(newPost.userId);
       threads.value.push(newThread);
       forum.threads?.push(newThread.id);
     } else {
@@ -163,6 +186,8 @@ export const useStore = defineStore("main", () => {
     threads,
     users,
     posts,
+    getUser,
+    getThreadView,
     createPost,
     getAuthUser,
     getThreads,

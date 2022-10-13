@@ -6,9 +6,9 @@ const props = defineProps<{
   posts: Post[];
 }>();
 
-const { users } = useStore();
+const { getUser } = useStore();
 
-const userById = (userId: string) => users.find((u) => u.id === userId);
+const userById = (userId: string) => getUser(userId);
 </script>
 
 <template>
@@ -16,16 +16,21 @@ const userById = (userId: string) => users.find((u) => u.id === userId);
     <div v-for="post in props.posts" :key="post.id" class="post">
       <div class="user-info">
         <a class="user-name" href="#">
-          {{ userById(post.userId)?.name }}
+          {{ userById(post.userId)!.user.name }}
         </a>
         <a href="#">
           <img
             class="avatar-large"
-            :src="userById(post.userId)?.avatar"
-            :alt="userById(post.userId)?.name"
+            :src="userById(post.userId)!.user.avatar"
+            :alt="userById(post.userId)!.user.name"
           />
         </a>
-        <p class="desktop-only text-small">108 Post</p>
+        <p class="desktop-only text-small">
+          {{ userById(post.userId)!.posts.length }} Posts
+        </p>
+        <p class="desktop-only text-small">
+          {{ userById(post.userId)!.threads.length }} Threads
+        </p>
       </div>
       <div class="post-content">
         <div>

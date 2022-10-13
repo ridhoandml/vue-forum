@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category } from "@/assets/types";
+import type { Category } from "@/types";
 import ForumList from "./ForumList.vue";
 import { useStore } from "@/stores";
 
