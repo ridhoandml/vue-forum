@@ -9,7 +9,9 @@ import PageHome from "@/pages/PageHome.vue";
 import PageThreadView from "@/pages/PageThreadView.vue";
 import PageNotFound from "@/pages/PageNotFound.vue";
 import PageForum from "@/pages/PageForum.vue";
+import PageForumCreate from "@/pages/PageForumCreate.vue";
 import PageCategory from "@/pages/PageCategory.vue";
+import PageCategoryCreate from "@/pages/PageCategoryCreate.vue";
 import PageProfile from "@/pages/PageProfile.vue";
 import PageThreadCreate from "@/pages/PageThreadCreate.vue";
 import PageThreadEdit from "@/pages/PageThreadEdit.vue";
@@ -35,10 +37,21 @@ const routes: Readonly<RouteRecordRaw[]> = [
     props: { edit: true },
   },
   {
+    path: "/category/:id/forum/create",
+    name: "ForumCreate",
+    component: PageForumCreate,
+    props: true,
+  },
+  {
     path: "/forum/:id",
     name: "Forum",
     component: PageForum,
     props: true,
+  },
+  {
+    path: "/category/create",
+    name: "CategoryCreate",
+    component: PageCategoryCreate,
   },
   {
     path: "/category/:id",

@@ -3,8 +3,24 @@ import { computed } from "vue";
 import PostList from "@/components/PostList.vue";
 import PostEditor from "../components/PostEditor.vue";
 import { useStore } from "@/stores";
+import { database } from "@/firebase";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
-const { posts, createPost, getThreadView } = useStore();
+const { posts, createPost, getThreadView, setThreads } = useStore();
+
+const set = await setDoc(doc(database, "cities", "LA"), {
+  name: "Los Angeles",
+  state: "CA",
+  country: "USA",
+});
+
+console.log(set);
+
+// const queryThread = await getDocs(collection(database, "threads"));
+// queryThread.forEach((doc) => {
+//   const threads = { ...doc.data(), id: doc.id };
+//   console.log(threads);
+// });
 
 const props = defineProps<{
   id: string;

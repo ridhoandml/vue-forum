@@ -1,13 +1,31 @@
 <script setup lang="ts">
+import { useFetchCategories } from "@/composables";
 import CategoryList from "../components/CategoryList.vue";
-import { useStore } from "@/stores";
 
-const { categories } = useStore();
+const { isError, isLoading, isReady, categories, errorMessage } =
+  useFetchCategories();
 </script>
 
 <template>
-  <h1 class="push-top">Welcome to Forums</h1>
-  <CategoryList :categories="categories" />
+  <div class="col-full push-top">
+    <div class="forum-header">
+      <div class="forum-details">
+        <h1 class="push-top">Welcome to Forums</h1>
+      </div>
+      <RouterLink
+        :to="{
+          name: 'CategoryCreate',
+        }"
+        class="btn-green btn-small"
+        >New Category</RouterLink
+      >
+    </div>
+  </div>
+  <div class="col-full push-top">
+    <p class="text-center" v-if="isLoading">Loading</p>
+    <CategoryList v-else-if="isReady" :categories="categories" />
+    <p v-else-if="isError">{{ errorMessage }}</p>
+  </div>
 </template>
 
 <style scoped>

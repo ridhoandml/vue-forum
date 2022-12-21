@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { useStore } from "@/stores";
+import { useAuthUser } from "@/composables";
 
-const { getAuthUser } = useStore();
+const id: string = "b6dj3P54hSfbVG2afGzD";
+
+const { user } = await useAuthUser(id);
 </script>
 
 <template>

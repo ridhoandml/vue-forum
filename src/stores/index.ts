@@ -1,28 +1,47 @@
 import { defineStore } from "pinia";
-import dataSources from "@/datas/data.json";
 import type {
   AuthUser,
   Category,
-  DataForum,
   Forum,
   Post,
   Thread,
   ThreadView,
   User,
 } from "@/types";
-import { computed, ref, type Ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { findById } from "@/helper";
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { database } from "@/firebase";
 
 export const useStore = defineStore("main", () => {
-  const data: Ref<DataForum> = ref(dataSources);
+  const forums = ref<Forum[]>([]);
+  const categories = ref<Category[]>([]);
+  const threads = ref<Thread[]>([]);
+  const users = ref<User[]>([]);
+  const posts = ref<Post[]>([]);
 
-  const forums: Ref<Forum[]> = ref(dataSources.forums);
-  const categories: Ref<Category[]> = ref(dataSources.categories);
-  const threads: Ref<Thread[]> = ref(dataSources.threads);
-  const users: Ref<User[]> = ref(dataSources.users);
-  const posts: Ref<Post[]> = ref(dataSources.posts);
+  onMounted(() => {
+    const queryCategories = query(collection(database, "categories"));
+    onSnapshot(queryCategories, (querySnapshot) => {
+      const resCategories: Category[] = [];
+      querySnapshot.forEach((doc) => {
+        const category: Category = {
+          forums: doc.data().forums,
+          name: doc.data().name,
+          slug: doc.data().slug,
+          id: doc.id,
+        };
+        resCategories.push(category);
+      });
+      categories.value = resCategories;
+    });
+  });
 
-  const user: Ref<AuthUser> = ref({
+  const setThreads = (getThreads: Thread[]) => {
+    threads.value = getThreads;
+  };
+
+  const user = ref<AuthUser>({
     authId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
   });
 
@@ -180,12 +199,12 @@ export const useStore = defineStore("main", () => {
   };
 
   return {
-    data,
     forums,
     categories,
     threads,
     users,
     posts,
+    setThreads,
     getUser,
     getThreadView,
     createPost,
